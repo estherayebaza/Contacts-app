@@ -9,6 +9,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.contacts.UI.MainActivity
 import com.example.contacts.UI.contactDetails
 import com.example.contacts.models.Contact
 
@@ -32,8 +33,7 @@ class ContactsAdapter(var contactList:List<Contact>, var context:Context):Recycl
                 .centerCrop()
                 .into(holder.imageView)
             holder.rvContact.setOnClickListener {
-                var intent= Intent(context, contactDetails::class.java)
-
+                val intent = Intent(baseContext, contactDetails::class.java)
                 intent.putExtra("name",currentContact.name)
 
                 context.startActivity(intent)

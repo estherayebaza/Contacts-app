@@ -1,35 +1,54 @@
 package com.example.contacts.UI
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
-import com.example.contacts.models.Contact
-import com.example.contacts.R
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isEmpty
 import com.example.contacts.ViewModel.ContactsViewModel
+import com.example.contacts.databinding.ActivityAddContactBinding
+import com.example.contacts.models.Contact
+
 
 class AddContactActivity : AppCompatActivity() {
-    val contactViewModel: ContactsViewModel by viewModels()
+    val contactsViewModel: ContactsViewModel by viewModels()
+    lateinit var binding: ActivityAddContactBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_view_contact)
+        binding= ActivityAddContactBinding.inflate(layoutInflater)
+        setContentView(binding.root)
     }
+
     override fun onResume() {
         super.onResume()
-        binding.btnSave.setOnClickListener{
-            saveContact()
+        binding.btnsavecontact.setOnClickListener {
+            validateContact()
         }
     }
-
     fun validateContact(){
-        var name = binding.etName.text.toString()
-        var phone = binding.etName.text.toString()
-        var email = binding.etName.text.toString()
-        var contact = Contact(0, name, phone, email, "")
-        contactViewModel.saveContact(contact)
+        binding.tilname.error=null
+        binding.tilphone.error=null
+        binding.tilemail.error=null
+        var name=binding.tilname
+        var phone=binding.tilphone
+        var email=binding.tilemail
+        var error=false
+        if (name.isEmpty() ){
+            error=true
+            binding.tilname.error="Name is required"
+        }
+        if(phone.isEmpty()){
+            error=true
+            binding.tilphone.error="Phonenumber is required"
+        }
+        if(email.isEmpty()){
+            error=true
+            binding.tilemail.error="Email is required"
+        }
+//        if(!error){
+//            contactsViewModel.saveContact(Contacts)
+//            binding.tilname.setText("")
+//            binding.tilemail.setText("")
+//            binding.tilphone.setText("")
+        }
 
     }
-    if(name.isEmpty()|| name isBlank()){
-        error=true
-        binding.tilName.error="Name is required"
-    }
-}
